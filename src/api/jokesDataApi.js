@@ -1,9 +1,8 @@
 import axios from "axios";
-import cheerio from "cheerio";
 
 const url = "https://parade.com/968666/parade/chuck-norris-jokes/";
 
-export const listJokes = async () => {
+export const getJokesPage = async () => {
   var response = await axios.get(url, {
     headers: {
       "User-Agent":
@@ -12,11 +11,8 @@ export const listJokes = async () => {
         "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8",
       "Accept-Language": "en-US,en;q=0.8",
       Referer: "https://www.google.com/",
-      Connection: "keep-alive",
-    },
+      "Accept-Encoding": "gzip, deflate, br"
+    }
   });
-  const html = response.data;
-  const $ = cheerio.load(html);
-  const listLine = $(".m-detail--body ol li");
-  return listLine.map((index, element) => $(element).text()).get();
+  return response.data;
 };
