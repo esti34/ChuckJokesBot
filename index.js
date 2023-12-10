@@ -13,6 +13,6 @@ telegramBot.onText(/set language (.+)/, (msg, match) => {
 
 telegramBot.onText(/\d+/, (msg) => {
     handleSelectJoke(msg.text).then(messageToSend => {
-        telegramBot.sendMessage(msg.chat.id, messageToSend);
+        telegramBot.sendMessage(msg.chat.id, `${msg.text}. ${messageToSend}`);
     });
 });
