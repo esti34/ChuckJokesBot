@@ -5,7 +5,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: chuck-bot
-  AZURE_WEBAPP_PACKAGE_PATH: './src'
+  AZURE_WEBAPP_PACKAGE_PATH: '.'
   NODE_VERSION: '20.10.0'
 
 permissions:
