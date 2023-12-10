@@ -1,10 +1,12 @@
 import { translate } from "./translateService.js";
 import { getJokes } from "./dataService.js";
+import { detectLanguage } from "./detectLanguageService.js";
+
 
 var currentLangCode = "en";
 const jokes = await getJokes();
 
-export async function handleSelectJoke(jokeNumber) {
+export const handleSelectJoke = async (jokeNumber) => {
   if (jokeNumber > 0 && jokeNumber < 102) {
     return await translate(jokes[jokeNumber - 1], currentLangCode);
   } else {
@@ -12,7 +14,7 @@ export async function handleSelectJoke(jokeNumber) {
   }
 }
 
-export async function handleSetLanguage(match) {
+export const handleSetLanguage = async (match) => {
   var languageCode = await detectLanguage(match[1]);
   if (languageCode != "wrong") {
     currentLangCode = languageCode;

@@ -1,24 +1,27 @@
 import axios from "axios";
 import { randomUUID } from "crypto";
 
-const apiKey = process.env.AZURE_TRANSLATOR_API_KEY;
-
-export async function getTranslation(text, languageCode) {
-  var response = await axios({
-    baseURL: "https://api.cognitive.microsofttranslator.com",
-    url: "/translate",
-    method: "post",
-    headers: {
-      "Ocp-Apim-Subscription-Key": apiKey,
-      "Ocp-Apim-Subscription-Region": "northeurope",
-      "Content-type": "application/json; charset=UTF-8",
-      "X-ClientTraceId": randomUUID().toString(),
-    },
-    params: getParams(languageCode),
-    data: [{ text: text }],
-    responseType: "json",
-  });
-  return response.data[0].translations[0].text;
+export const getTranslation = async (text, languageCode) => {
+  try {
+    var response = await axios({
+      baseURL: "https://api.cognitive.microsofttranslator.com",
+      url: "/translate",
+      method: "post",
+      headers: {
+        "Ocp-Apim-Subscription-Key": process.env.AZURE_TRANSLATOR_API_KEY,
+        "Ocp-Apim-Subscription-Region": "northeurope",
+        "Content-type": "application/json; charset=UTF-8",
+        "X-ClientTraceId": randomUUID().toString(),
+      },
+      params: getParams(languageCode),
+      data: [{ text: text }],
+      responseType: "json",
+    });
+    return response.data[0].translations[0].text;
+  } catch (ex) {
+    console.log(ex)
+    throw ex;
+  }
 }
 
 function getParams(languageCode) {
